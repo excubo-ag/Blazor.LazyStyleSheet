@@ -1,0 +1,14 @@
+﻿@inject IStyleSheetService StyleSheetService
+
+@foreach (var style_sheet in StyleSheetService.RequiredStyleSheets)
+{
+    <link @key="style_sheet" rel="stylesheet" type="text/css" href="@style_sheet" />
+}
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        StyleSheetService.RequiredStyleSheets.CollectionChanged += (_, __) => StateHasChanged();
+        return base.OnInitializedAsync();
+    }
+}
