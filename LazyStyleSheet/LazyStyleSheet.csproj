@@ -12,6 +12,7 @@
     <Nullable>enable</Nullable>
     <RepositoryUrl>https://github.com/excubo-ag/Blazor.LazyStyleSheet</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Excubo.Blazor.LazyStyleSheet makes it easy to dynamically load style sheets in razor components. This improves page load times and reduces the amount of data transferred over the network.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
