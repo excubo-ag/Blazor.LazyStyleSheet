@@ -1,4 +1,8 @@
-## Why Excubo.Blazor.LazyStyleSheet?
+## Excubo.Blazor.LazyStyleSheet
+
+![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)
+![Nuget](https://img.shields.io/nuget/dt/Excubo.Blazor.LazyStyleSheet)
+![GitHub](https://img.shields.io/github/license/excubo-ag/Blazor.LazyStyleSheet)
 
 A major issue on websites is slow page load. In part, this is due to enormous payloads that need to be downloaded in full before a page can be rendered correctly. Minimization and compression help to some degree, but it ignores the awkward fact that many style sheets are only used to a tiny fraction.
 
