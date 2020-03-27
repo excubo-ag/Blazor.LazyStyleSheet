@@ -47,19 +47,19 @@ dotnet add package Excubo.Blazor.LazyStyleSheet --version 2.0.0
 
 ### 3. Add the `StyleSheets` component to your `App` component
 
-```razor
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
-<Excubo.Blazor.LazyStyleSheet.StyleSheets />
-```
+<pre>
+&lt;Router AppAssembly="@typeof(Program).Assembly"&gt;
+    &lt;Found Context="routeData"&gt;
+        &lt;AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" /&gt;
+    &lt;/Found&gt;
+    &lt;NotFound&gt;
+        &lt;LayoutView Layout="@typeof(MainLayout)"&gt;
+            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
+        &lt;/LayoutView&gt;
+    &lt;/NotFound&gt;
+&lt;/Router&gt;
+<b>&lt;Excubo.Blazor.LazyStyleSheet.StyleSheets /&gt;</b>
+</pre>
 
 ### 4. Write your style sheets and put them next to your component
 
