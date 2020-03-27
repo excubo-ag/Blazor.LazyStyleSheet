@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- default values -->
+    <LazyStyleSheets_StaticAssetFolder Condition=" '$(LazyStyleSheets_StaticAssetFolder)' == '' ">wwwroot</LazyStyleSheets_StaticAssetFolder>
+    <LazyStyleSheets_ComponentStyleFolder Condition=" '$(LazyStyleSheets_ComponentStyleFolder)' == '' ">css/components</LazyStyleSheets_ComponentStyleFolder>
+    <LazyStyleSheets_UseMinifiedStyleSheets Condition=" '$(LazyStyleSheets_UseMinifiedStyleSheets)' == '' ">true</LazyStyleSheets_UseMinifiedStyleSheets>
+    <LazyStyleSheets_UseGzippedStyleSheets Condition=" '$(LazyStyleSheets_UseGzippedStyleSheets)' == '' ">false</LazyStyleSheets_UseGzippedStyleSheets>
+    <LazyStyleSheets_UseWebCompiler Condition=" '$(LazyStyleSheets_UseWebCompiler)' == '' ">true</LazyStyleSheets_UseWebCompiler>
+  </PropertyGroup>
+
+  <Target Name="MoveCss" BeforeTargets="BeforeBuild">
+    <!-- Step1: moving scss or css files that are declared together with razor components to the static asset folder (usually wwwroot) -->
+    <ItemGroup>
+      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="wwwroot\**" />
+      <ObsoleteComponentStylesInTargetDir Include="$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\**\*" Exclude="@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename)%(Extension)');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).css');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).min.css');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).min.css.gz');" />
+    </ItemGroup>
+    <Message Text="Deleting obsolete files in folder $(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder): @(ObsoleteComponentStylesInTargetDir)" Condition="'@(ObsoleteComponentStylesInTargetDir)' != ''" Importance="high" />
+    <Delete Files="@(ObsoleteComponentStylesInTargetDir)" />
+    <Copy SourceFiles="@(ComponentStyles)" DestinationFiles="@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="TestWebCompiler" AfterTargets="MoveCss" Condition=" '$(LazyStyleSheets_UseWebCompiler)' != 'false' ">
+    <!-- Test if Excubo.WebCompiler is installed (recommended) -->
+    <Exec Command="webcompiler -h" ContinueOnError="true" StandardOutputImportance="low" StandardErrorImportance="low" LogStandardErrorAsError="false" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+  </Target>
+
+  <Target Name="CompileCss" AfterTargets="MoveCss;TestWebCompiler" Condition=" ('$(ErrorCode)' == '0') And ('$(LazyStyleSheets_UseWebCompiler)' != 'false') ">
+    <!-- Compile all static component assets, if webcompiler is installed -->
+    <Exec Command="webcompiler -r $(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)" />
+  </Target>
+  <Target Name="DontCompileCss" AfterTargets="MoveCss;TestWebCompiler" Condition=" ('$(ErrorCode)' != '0') And ('$(LazyStyleSheets_UseWebCompiler)' != 'false') ">
+    <!-- Warn the user that webcompiler is not installed -->
+    <Message Text="Could not compile static resources. Please install webcompiler with dotnet tool install -g Excubo.WebCompiler" Importance="normal" />
+  </Target>
+
+  <Target Name="InjectOneStyleSheetService">
+    <!-- Create the injection code for the syle sheet service. Requires that the namespace corresponds to the folder hierarchy -->
+    <PropertyGroup>
+      <TMP__Path>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('/', '\').Replace('\','.'))</TMP__Path>
+      <TMP__Class>$([System.IO.Path]::GetFilename('$(CurrentFile)').Substring(0, $([System.IO.Path]::GetFilename('$(CurrentFile)').IndexOf('.razor'))))</TMP__Class>
+      <TMP__File>$([System.IO.Path]::GetDirectoryName('$(CurrentFile)').Replace('\','/'))/$([System.IO.Path]::GetFilenameWithoutExtension('$(CurrentFile)'))</TMP__File>
+      <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">css</TMP__Extension>
+      <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' != 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">min.css</TMP__Extension>
+      <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' != 'false') ">css.gz</TMP__Extension>
+      <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' != 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' != 'false') ">min.css.gz</TMP__Extension>
+      <TMP__FullStylePath>$(LazyStyleSheets_ComponentStyleFolder)/$(TMP__File).$(TMP__Extension)</TMP__FullStylePath>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)StyleSheetInjection\$(CurrentFile).g.cs"  WriteOnlyWhenDifferent="true" Overwrite="true"
+                      
+                      Lines="
+                      namespace $(RootNamespace).$(TMP__Path);
+                      {;
+                          public partial class $(TMP__Class);
+                          {;
+                              private global::Excubo.Blazor.LazyStyleSheet.IStyleSheetService style_sheet_service%3b;
+                              [global::Microsoft.AspNetCore.Components.Inject];
+                              global::Excubo.Blazor.LazyStyleSheet.IStyleSheetService StyleSheetService;
+                              {;
+                                  get => style_sheet_service%3b;
+                                  set;
+                                  {;
+                                      style_sheet_service = value%3b;
+                                      style_sheet_service?.Add(&quot;$(TMP__FullStylePath)&quot;)%3b;
+                                  };
+                              };
+                          };
+                      };
+                      ">
+    </WriteLinesToFile>
+  </Target>
+
+  <Target Name="InjectStyleSheetService" AfterTargets="MoveCss;CompileCss;DontCompileCss" BeforeTargets="CompileCore">
+    <!-- Inject StyleSheetService into all components that have a style sheet associated with them -->
+    <ItemGroup>
+      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="wwwroot\**" />
+    </ItemGroup>
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)StyleSheetInjection\**\*.g.cs" />
+    </ItemGroup>
+  </Target>
+  
+  <Target Name="CleanInjectStyleSheetService" AfterTargets="CoreClean">
+    <RemoveDir Directories="$(IntermediateOutputPath)StyleSheetInjection" />
+  </Target>
+</Project>
