@@ -20,6 +20,7 @@ Excubo.Blazor.LazyStyleSheet enables you to write dedicated style sheet for each
 
 ### 1. Install the nuget package Excubo.Blazor.LazyStyleSheet
 
+Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/).
 ![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)
 
 #### Package Manager:
