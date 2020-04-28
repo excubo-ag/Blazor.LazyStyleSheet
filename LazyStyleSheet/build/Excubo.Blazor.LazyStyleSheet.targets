@@ -13,7 +13,7 @@
   <Target Name="MoveCss" BeforeTargets="BeforeBuild">
     <!-- Step1: moving scss or css files that are declared together with razor components to the static asset folder (usually wwwroot) -->
     <ItemGroup>
-      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="wwwroot\**" />
+      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="$(LazyStyleSheets_StaticAssetFolder)\**" />
       <ObsoleteComponentStylesInTargetDir Include="$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\**\*" Exclude="@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename)%(Extension)');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).css');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).min.css');@(ComponentStyles->'$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)\%(RecursiveDir)%(Filename).min.css.gz');" />
     </ItemGroup>
     <Message Text="Deleting obsolete files in folder $(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder): @(ObsoleteComponentStylesInTargetDir)" Condition="'@(ObsoleteComponentStylesInTargetDir)' != ''" Importance="high" />
@@ -76,7 +76,7 @@
   <Target Name="InjectStyleSheetService" AfterTargets="MoveCss;CompileCss;DontCompileCss" BeforeTargets="CompileCore">
     <!-- Inject StyleSheetService into all components that have a style sheet associated with them -->
     <ItemGroup>
-      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="wwwroot\**" />
+      <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="$(LazyStyleSheets_StaticAssetFolder)\**" />
     </ItemGroup>
     <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" />
     <ItemGroup>
