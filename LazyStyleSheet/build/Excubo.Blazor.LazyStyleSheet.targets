@@ -10,6 +10,9 @@
     <LazyStyleSheets_UseWebCompiler Condition=" '$(LazyStyleSheets_UseWebCompiler)' == '' ">true</LazyStyleSheets_UseWebCompiler>
   </PropertyGroup>
 
+  <Target Name="EnsureComponentStyleFolderExists" BeforeTargets="MoveCss">
+    <MakeDir Directories="$(LazyStyleSheets_StaticAssetFolder)/$(LazyStyleSheets_ComponentStyleFolder)" ContinueOnError="true"/>
+  </Target>
   <Target Name="MoveCss" BeforeTargets="BeforeBuild">
     <!-- Step1: moving scss or css files that are declared together with razor components to the static asset folder (usually wwwroot) -->
     <ItemGroup>
@@ -41,6 +44,7 @@
     <!-- Create the injection code for the syle sheet service. Requires that the namespace corresponds to the folder hierarchy -->
     <PropertyGroup>
       <TMP__Path>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('/', '\').Replace('\','.'))</TMP__Path>
+      <TMP__PathWithPeriod>$(([System.String]::IsNullOrEmpty('$(TMP__Path)') ? '' : '.$(TMP__Path)'))</TMP__PathWithPeriod>
       <TMP__Class>$([System.IO.Path]::GetFilename('$(CurrentFile)').Substring(0, $([System.IO.Path]::GetFilename('$(CurrentFile)').IndexOf('.razor'))))</TMP__Class>
       <TMP__File>$([System.IO.Path]::GetDirectoryName('$(CurrentFile)').Replace('\','/'))/$([System.IO.Path]::GetFilenameWithoutExtension('$(CurrentFile)'))</TMP__File>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">css</TMP__Extension>
@@ -52,7 +56,7 @@
     <WriteLinesToFile File="$(IntermediateOutputPath)StyleSheetInjection\$(CurrentFile).g.cs"  WriteOnlyWhenDifferent="true" Overwrite="true"
                       
                       Lines="
-                      namespace $(RootNamespace).$(TMP__Path);
+                      namespace $(RootNamespace)$(TMP__PathWithPeriod);
                       {;
                           public partial class $(TMP__Class);
                           {;
@@ -78,7 +82,7 @@
     <ItemGroup>
       <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="$(LazyStyleSheets_StaticAssetFolder)\**" />
     </ItemGroup>
-    <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" Condition="'$(ComponentStyles)' != ''" />
     <ItemGroup>
       <Compile Include="$(IntermediateOutputPath)StyleSheetInjection\**\*.g.cs" />
     </ItemGroup>
