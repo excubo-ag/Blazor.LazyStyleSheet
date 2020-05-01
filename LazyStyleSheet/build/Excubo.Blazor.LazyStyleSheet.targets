@@ -44,7 +44,8 @@
     <!-- Create the injection code for the syle sheet service. Requires that the namespace corresponds to the folder hierarchy -->
     <PropertyGroup>
       <TMP__Path>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('/', '\').Replace('\','.'))</TMP__Path>
-      <TMP__PathWithPeriod>$(([System.String]::IsNullOrEmpty('$(TMP__Path)') ? '' : '.$(TMP__Path)'))</TMP__PathWithPeriod>
+      <TMP__PathWithPeriod Condition="'$(TMP__Path)' == ''"></TMP__PathWithPeriod>
+      <TMP__PathWithPeriod Condition="'$(TMP__Path)' != ''">.$(TMP__Path)</TMP__PathWithPeriod>
       <TMP__Class>$([System.IO.Path]::GetFilename('$(CurrentFile)').Substring(0, $([System.IO.Path]::GetFilename('$(CurrentFile)').IndexOf('.razor'))))</TMP__Class>
       <TMP__File>$([System.IO.Path]::GetDirectoryName('$(CurrentFile)').Replace('\','/'))/$([System.IO.Path]::GetFilenameWithoutExtension('$(CurrentFile)'))</TMP__File>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">css</TMP__Extension>
