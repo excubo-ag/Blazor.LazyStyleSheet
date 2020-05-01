@@ -83,7 +83,7 @@
     <ItemGroup>
       <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="$(LazyStyleSheets_StaticAssetFolder)\**" />
     </ItemGroup>
-    <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" Condition="'$(ComponentStyles)' != ''" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="CurrentFile=%(ComponentStyles.Identity)" Targets="InjectOneStyleSheetService" />
     <ItemGroup>
       <Compile Include="$(IntermediateOutputPath)StyleSheetInjection\**\*.g.cs" />
     </ItemGroup>
