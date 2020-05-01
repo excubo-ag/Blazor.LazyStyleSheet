@@ -4,6 +4,8 @@ This example handles the use case for a blazor app with some components in a dif
 
 ## Relevant files
 
+All the following files have been modified slightly from the plain Blazor sample project. All changes are detailed below.
+
 ### ComponentWithStyle/ComponentWithStyle.csproj
 
 ```xml
