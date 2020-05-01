@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CssResources Include="$(MSBuildThisFileDirectory)..\staticwebassets\component_library\*" />
+    <DefaultValues Include="$(MSBuildThisFileDirectory)..\staticwebassets\component_library_config.scss" />
+  </ItemGroup>
+  <Target Name="CopyResources" BeforeTargets="BeforeCompile" >
+    <Message Importance="high" Text="Copying resources to consumer app!" />
+    <Message Importance="high" Text="First up, all resources, except the default config" />
+    <Message Importance="high" Text="@(CssResources)" />
+    <Copy SourceFiles="@(CssResources)"
+          DestinationFolder="$(MsBuildProjectDirectory)\wwwroot\component_library\" />
+    <Message Importance="high" Text="Now what's left is the default config, which we only write if it doesn't exist yet" />
+    <Message Importance="high" Text="@(DefaultValues)" />
+    <Copy SourceFiles="@(DefaultValues)"
+          DestinationFolder="$(MsBuildProjectDirectory)\wwwroot\"
+          Condition="!Exists('$(MsBuildProjectDirectory)\wwwroot\component_library_config.scss') " />
+  </Target>
+</Project>
