@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ComponentWithStyle\ComponentWithStyle.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MaterialResources Include="$(MSBuildThisFileDirectory)..\ComponentWithStyle\wwwroot\css\component_with_style\*" />
+  </ItemGroup>
+  <Target Name="CopyResources" BeforeTargets="BeforeCompile">
+    <Copy SourceFiles="@(MaterialResources)" DestinationFolder="$(MsBuildProjectDirectory)\wwwroot\css\component_with_style\" />
+  </Target>
+
+  <Target Name="CompileWithUserDefinedColors" AfterTargets="CoreCompile">
+    <Exec Command="webcompiler -r wwwroot/css" />
+  </Target>
+
+</Project>
