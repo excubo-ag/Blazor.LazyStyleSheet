@@ -3,7 +3,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Stefan Lörwald</Authors>
     <Company>excubo-ag</Company>
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
     <RepositoryUrl>https://github.com/excubo-ag/Blazor.LazyStyleSheet</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Excubo.Blazor.LazyStyleSheet makes it easy to dynamically load style sheets in razor components. This improves page load times and reduces the amount of data transferred over the network.</Description>
