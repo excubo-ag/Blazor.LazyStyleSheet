@@ -1,18 +1,38 @@
 <Project>
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Stefan Lörwald</Authors>
-    <Company>excubo-ag</Company>
-    <Version>2.0.5</Version>
-    <RepositoryUrl>https://github.com/excubo-ag/Blazor.LazyStyleSheet</RepositoryUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Description>Excubo.Blazor.LazyStyleSheet makes it easy to dynamically load style sheets in razor components. This improves page load times and reduces the amount of data transferred over the network.</Description>
   </PropertyGroup>
-
+  <!--Title, Description, Tags, Product-->
+  <PropertyGroup>
+    <Title>LazyStyleSheet for Blazor</Title>
+    <Description>Excubo.Blazor.LazyStyleSheet makes it easy to dynamically load style sheets in razor components. This improves page load times and reduces the amount of data transferred over the network.</Description>
+    <PackageTags>blazor,css,web</PackageTags>
+    <Product>Excubo.Blazor.LazyStyleSheet</Product>
+  </PropertyGroup>
+  <!--Author, Company-->
+  <PropertyGroup>
+    <Authors>Stefan Lörwald</Authors>
+    <Company>excubo ag</Company>
+  </PropertyGroup>
+  <!--Repository-->
+  <PropertyGroup>
+    <PackageProjectUrl>https://github.com/excubo-ag/Blazor.LazyStyleSheet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/excubo-ag/Blazor.LazyStyleSheet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  <!--PackageId, Version-->
+  <PropertyGroup>
+    <PackageId>Excubo.Blazor.LazyStyleSheet</PackageId>
+    <Version>2.0.5</Version>
+  </PropertyGroup>
+  <!--Self Include-->
   <ItemGroup>
     <None Include="package.csproj" />
   </ItemGroup>
-  
+  <!--Licensing-->
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
