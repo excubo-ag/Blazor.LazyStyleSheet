@@ -97,6 +97,7 @@ This file is responsible for copying the scss files into the users application. 
 - added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.5" />`.
 - `LazyStyleSheets` is configured to use a non-default output path `component_library`.
 - `LazyStyleSheets` is configured to not use `webcompiler` (because we want to define our own colors in the consumers' app).
+- we include the `build` targets in the nuget package.
 
 ## What to tell your users
 
