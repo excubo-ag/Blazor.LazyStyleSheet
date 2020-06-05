@@ -25,17 +25,17 @@ Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.or
 
 #### Package Manager:
 ```ps
-Install-Package Excubo.Blazor.LazyStyleSheet -Version 2.0.7
+Install-Package Excubo.Blazor.LazyStyleSheet -Version 2.0.8
 ```
 
 #### .NET Cli:
 ```cmd
-dotnet add package Excubo.Blazor.LazyStyleSheet --version 2.0.7
+dotnet add package Excubo.Blazor.LazyStyleSheet --version 2.0.8
 ```
 
 #### Package Reference
 ```xml
-<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.7" />
+<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.8" />
 ```
 
 ### 2. Add the service in your `Startup.cs` file

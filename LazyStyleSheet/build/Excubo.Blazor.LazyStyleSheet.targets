@@ -40,7 +40,7 @@
     <Message Text="Could not compile static resources. Please install webcompiler with dotnet tool install -g Excubo.WebCompiler" Importance="normal" />
   </Target>
 
-  <Target Name="InjectOneStyleSheetService">
+  <Target Name="InjectOneStyleSheetService" Condition=" '$(CurrentFile)' != '' ">
     <!-- Create the injection code for the syle sheet service. Requires that the namespace corresponds to the folder hierarchy -->
     <PropertyGroup>
       <TMP__Path>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('/', '\').Replace('\','.'))</TMP__Path>
