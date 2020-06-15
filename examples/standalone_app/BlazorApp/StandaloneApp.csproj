@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>BlazorApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.8" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.9" />
   </ItemGroup>
 
   <Target Name="CompileWebAssets" AfterTargets="CoreCompile">
