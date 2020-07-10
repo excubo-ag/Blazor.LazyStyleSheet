@@ -12,6 +12,12 @@ Excubo.Blazor.LazyStyleSheet enables you to write dedicated style sheet for each
 
 ## Breaking changes
 
+### Version 3.X.Y
+
+Good news! Adding lazy-loaded style sheets to your component just became a whole lot easier. Simply add `<Stylesheet Src="path/to/my/style.css" />` to any component.
+If you write your styles as a `Component.razor.css` file, you don't need to do anything.
+And you can now also remove the `<StyleSheets />` component in your `App.razor`, as well as the dependency injection code in your `Startup.cs`.
+
 ### Version 2.X.Y
 
 `Excubo.Blazor.LazyStyleSheet` now contains build tasks to automatically inject the `IStyleSheetService` when you write your component style as a `Component.razor.css` or `Component.razor.scss` file. That means, if you previously manually inserted `IStyleSheetService` into your component, you now have to remove that.
@@ -25,44 +31,20 @@ Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.or
 
 #### Package Manager:
 ```ps
-Install-Package Excubo.Blazor.LazyStyleSheet -Version 2.0.9
+Install-Package Excubo.Blazor.LazyStyleSheet -Version 3.0.0
 ```
 
 #### .NET Cli:
 ```cmd
-dotnet add package Excubo.Blazor.LazyStyleSheet --version 2.0.9
+dotnet add package Excubo.Blazor.LazyStyleSheet --version 3.0.0
 ```
 
 #### Package Reference
 ```xml
-<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.9" />
+<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.0.0" />
 ```
 
-### 2. Add the service in your `Startup.cs` file
-
-```cs
-   //...
-   services.AddStyleSheetLazyLoading(); // Tip: Use Excubo.Analyzers.DependencyInjectionValidation for warnings when you forget such a dependency
-   //...
-```
-
-### 3. Add the `StyleSheets` component to your `App` component
-
-<pre>
-&lt;Router AppAssembly="@typeof(Program).Assembly"&gt;
-    &lt;Found Context="routeData"&gt;
-        &lt;AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout="@typeof(MainLayout)"&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-<b>&lt;Excubo.Blazor.LazyStyleSheet.StyleSheets /&gt;</b>
-</pre>
-
-### 4. Write your style sheets and put them next to your component
+### 2a. Write your style sheets and put them next to your component
 
 `MyComponent.razor`:
 ```razor
@@ -79,9 +61,19 @@ dotnet add package Excubo.Blazor.LazyStyleSheet --version 2.0.9
 }
 ```
 
-## Remarks
+### 2b. Load any stylesheet in your component
 
- - The `<StyleSheets />` component should only be used exactly once. However, except for a slight performance penalty, there is likely no issue by doing so. Of course there's no benefit to multiple `<StyleSheets />` components either.
+`MyComponent.razor`:
+```razor
+@page "/hello"
+
+<Stylesheet Src="path/to/my/style.min.css" />
+<div class="mystyle">My styled component</div>
+
+```
+
+## Remark
+
  - Style sheet urls may be added any number of times, and will only be added to the DOM once (as duplicate `<link>` tags don't achieve anything). This only applies if the url string matches exactly, i.e. there is a difference between `https://localhost/css/style.css` and `css/style.css`.
 
 
@@ -145,7 +137,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var headers = context.Context.Response.Headers;
             HandleCompressedResourced(context, headers);
-            CacheCommonResources(env, headers);
         }
     });
     app.UseStaticFiles();
@@ -154,15 +145,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     /// ...
 }
 
-private static void CacheCommonResources(IWebHostEnvironment env, IHeaderDictionary headers)
-{
-    if ((string)headers["Content-Type"] == "application/javascript" ||
-        (string)headers["Content-Type"] == "text/css")
-    {
-        var cache_period = env.IsDevelopment() ? 10 * 60 : 2 * 7 * 24 * 60 * 60; // development: 10m, production: 2w
-        headers.Add("Cache-Control", $"public, max-age={cache_period}");
-    }
-}
 private static void HandleCompressedResourced(StaticFileResponseContext context, IHeaderDictionary headers)
 {
     if (context.File == null)
@@ -197,29 +179,7 @@ Activate use of compressed resources in your `csproj` file:
 
 ### Custom namespace
 
-The automatic injection of the `IStyleSheetService` does not work if the namespace for your component is overridden. You then need to manually add this feature. The recommended code snippet is
-
-```cs
-namespace Custom
-{
-    public partial class MyComponent
-    {
-        private IStyleSheetService style_sheet_service;
-        [Inject]
-        private IStyleSheetService
-        {
-            get => style_sheet_service;
-            set
-            {
-                style_sheet_service = value;
-                style_sheet_service?.Add("path/to/your/stylesheet.min.css");
-            }
-        }
-    }
- }
-```
-
-As this hardcodes the path to your stylesheet, it is strongly not recommended to use overriden namespaces, as it is not stable under refactorings.
+The automatic injection of the style sheet does not work if the namespace for your component is overridden. Use a `<Stylesheet Src="..." />` instead.
 
 ## Contribute
 

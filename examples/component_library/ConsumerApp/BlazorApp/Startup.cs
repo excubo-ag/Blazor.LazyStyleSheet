@@ -1,5 +1,4 @@
 using BlazorApp.Data;
-using Excubo.Blazor.LazyStyleSheet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +22,6 @@ namespace BlazorApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddStyleSheetLazyLoading();
             services.AddSingleton<WeatherForecastService>();
         }
 

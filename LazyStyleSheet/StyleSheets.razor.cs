@@ -1,4 +1,6 @@
-﻿namespace Excubo.Blazor.LazyStyleSheet
+﻿using System;
+
+namespace Excubo.Blazor.LazyStyleSheet
 {
     /// <summary>
     /// Component that writes link-tags for style sheets on demand.
@@ -22,6 +24,7 @@
     ///   &lt;StyleSheets/&gt;
     ///   </code>
     /// </example>
+    [Obsolete("This can be removed! Adding style sheets just became a whole lot easier. See https://github.com/excubo-ag/Blazor.LazyStyleSheet for more details.")]
     public partial class StyleSheets
     {
     }

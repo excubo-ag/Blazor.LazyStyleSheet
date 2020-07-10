@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Excubo.Blazor.Tests_LazyStyleSheet")]
 namespace Excubo.Blazor.LazyStyleSheet

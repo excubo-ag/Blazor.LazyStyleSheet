@@ -19,7 +19,7 @@ All the following files have been modified slightly from the plain Blazor sample
     
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.5" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.3" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" />
@@ -57,60 +57,6 @@ All the following files have been modified slightly from the plain Blazor sample
 - we reference the file `../../default_values.scss` which contains the definition for the custom color stored in `variable`.
 - we define the style used in `ComponentWithUserDefinedColor.razor`
 - we use a variable instead of a hardcoded value
-
-### BlazorApp/Startup.cs
-
-```cs
-using Excubo.Blazor.LazyStyleSheet;
-// other imports omitted here
-
-namespace BlazorApp
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddStyleSheetLazyLoading();
-            services.AddSingleton<WeatherForecastService>();
-        }
-
-        // Omitted here, because no change: public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    }
-}
-```
-
-- added service `services.AddStyleSheetLazyLoading();` (uses namespace `Excubo.Blazor.LazyStyleSheet`)
-
-### BlazorApp/App.razor
-
-```html
-
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
-
-<Excubo.Blazor.LazyStyleSheet.StyleSheets />
-```
-
--  added the `<Excubo.Blazor.LazyStyleSheet.StyleSheets />` component.
 
 ### BlazorApp/_Imports.razor
 

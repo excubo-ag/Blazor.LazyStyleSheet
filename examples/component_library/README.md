@@ -76,7 +76,7 @@ This file is responsible for copying the scss files into the users application. 
     
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.5" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.3" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" />
@@ -94,7 +94,7 @@ This file is responsible for copying the scss files into the users application. 
 
 ```
 
-- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.5" />`.
+- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.0.0" />`.
 - `LazyStyleSheets` is configured to use a non-default output path `component_library`.
 - `LazyStyleSheets` is configured to not use `webcompiler` (because we want to define our own colors in the consumers' app).
 - we include the `build` targets in the nuget package.
@@ -102,62 +102,6 @@ This file is responsible for copying the scss files into the users application. 
 ## What to tell your users
 
 All of the above is what's necessary in your component library. What's left now is what to tell your users to do with the library
-
-### ConsumerApp/BlazorApp/Startup.cs
-
-```cs
-using Excubo.Blazor.LazyStyleSheet;
-// other imports omitted here
-
-namespace BlazorApp
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddStyleSheetLazyLoading();
-            services.AddSingleton<WeatherForecastService>();
-        }
-
-        // Omitted here, because no change: public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    }
-}
-```
-
-- added service `services.AddStyleSheetLazyLoading();` (uses namespace `Excubo.Blazor.LazyStyleSheet`)
-
-If you have services on your own, wrap all of it into a single extension method and include the call to `AddStyleSheetLazyLoading` in there.
-
-### ConsumerApp/BlazorApp/App.razor
-
-```html
-
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
-
-<Excubo.Blazor.LazyStyleSheet.StyleSheets />
-```
-
--  added the `<Excubo.Blazor.LazyStyleSheet.StyleSheets />` component.
 
 ### ConsumerApp/BlazorApp/_Imports.razor
 

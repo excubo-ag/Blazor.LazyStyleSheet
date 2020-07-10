@@ -1,12 +1,7 @@
 ﻿@page "/"
-@inject Excubo.Blazor.LazyStyleSheet.IStyleSheetService StyleSheetService
-@code {
-    protected override void OnInitialized()
-    {
-        StyleSheetService.Add("css/manual_injection.min.css");
-        base.OnInitialized();
-    }
-}
+
+<Excubo.Blazor.LazyStyleSheet.Stylesheet Src="css/manual_injection.min.css" />
+
 <h1 class="italicised">Hello, world!</h1>
 
 Welcome to your new app.

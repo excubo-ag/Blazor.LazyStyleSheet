@@ -57,19 +57,21 @@
     <WriteLinesToFile File="$(IntermediateOutputPath)StyleSheetInjection\$(CurrentFile).g.cs"  WriteOnlyWhenDifferent="true" Overwrite="true"
                       
                       Lines="
+                      using Microsoft.JSInterop%3b;
                       namespace $(RootNamespace)$(TMP__PathWithPeriod);
                       {;
                           public partial class $(TMP__Class);
                           {;
-                              private global::Excubo.Blazor.LazyStyleSheet.IStyleSheetService style_sheet_service%3b;
                               [global::Microsoft.AspNetCore.Components.Inject];
-                              global::Excubo.Blazor.LazyStyleSheet.IStyleSheetService StyleSheetService;
+                              IJSRuntime excubo_style_sheet_injection_js;
                               {;
-                                  get => style_sheet_service%3b;
+                                  get => null%3b;
                                   set;
                                   {;
-                                      style_sheet_service = value%3b;
-                                      style_sheet_service?.Add(&quot;$(TMP__FullStylePath)&quot;)%3b;
+                                      var src = &quot;$(TMP__FullStylePath)&quot;%3b;
+                                      var condition = $&quot;document.head.querySelector(`[href='{src}']`) == null&quot;%3b;
+                                      var action = $&quot;let s = document.createElement('link')%3b s.setAttribute('rel', 'stylesheet')%3b s.setAttribute('href', '{src}')%3b document.head.appendChild(s)%3b&quot;%3b;
+                                      value.InvokeVoidAsync(&quot;eval&quot;, $&quot;if ({condition}) {{ {action} }}&quot;)%3b;
                                   };
                               };
                           };
@@ -88,7 +90,7 @@
       <Compile Include="$(IntermediateOutputPath)StyleSheetInjection\**\*.g.cs" />
     </ItemGroup>
   </Target>
-  
+
   <Target Name="CleanInjectStyleSheetService" AfterTargets="CoreClean">
     <RemoveDir Directories="$(IntermediateOutputPath)StyleSheetInjection" />
   </Target>
