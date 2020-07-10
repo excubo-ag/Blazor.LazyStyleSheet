@@ -29,7 +29,7 @@ All the following files have been modified slightly from the plain Blazor sample
 </Project>
 ```
 
-- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="2.0.5" />`.
+- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.0.0" />`.
 - `LazyStyleSheets` is configured to use a non-default output path `css/component_with_style`.
 - `LazyStyleSheets` is configured to not use `webcompiler` (because we want to define our own colors in the BlazorApp).
 
