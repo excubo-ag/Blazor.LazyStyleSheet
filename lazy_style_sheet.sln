@@ -30,8 +30,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Standalone", "Standalone", 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ComponentLibrary", "ComponentLibrary", "{29A2AB81-706F-4F6B-9202-25C909801777}"
+	ProjectSection(SolutionItems) = preProject
+		examples\component_library\README.md = examples\component_library\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SameProject", "SameProject", "{3CBB6664-E4A8-4230-A19C-EC301A239FCD}"
+	ProjectSection(SolutionItems) = preProject
+		examples\blazor_app_with_component_project\README.md = examples\blazor_app_with_component_project\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
