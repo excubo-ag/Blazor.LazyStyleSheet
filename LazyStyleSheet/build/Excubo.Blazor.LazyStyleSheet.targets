@@ -8,6 +8,7 @@
     <LazyStyleSheets_UseMinifiedStyleSheets Condition=" '$(LazyStyleSheets_UseMinifiedStyleSheets)' == '' ">true</LazyStyleSheets_UseMinifiedStyleSheets>
     <LazyStyleSheets_UseGzippedStyleSheets Condition=" '$(LazyStyleSheets_UseGzippedStyleSheets)' == '' ">false</LazyStyleSheets_UseGzippedStyleSheets>
     <LazyStyleSheets_UseWebCompiler Condition=" '$(LazyStyleSheets_UseWebCompiler)' == '' ">true</LazyStyleSheets_UseWebCompiler>
+    <LazyStyleSheets_AutoInject Condition=" '$(LazyStyleSheets_AutoInject)' == '' ">true</LazyStyleSheets_AutoInject>
   </PropertyGroup>
 
   <Target Name="EnsureComponentStyleFolderExists" BeforeTargets="MoveCss">
@@ -80,7 +81,7 @@
     </WriteLinesToFile>
   </Target>
 
-  <Target Name="InjectStyleSheetService" AfterTargets="MoveCss;CompileCss;DontCompileCss" BeforeTargets="CompileCore">
+  <Target Name="InjectStyleSheetService" AfterTargets="MoveCss;CompileCss;DontCompileCss" BeforeTargets="CompileCore" Condition=" '$(LazyStyleSheets_AutoInject)' != 'false' ">
     <!-- Inject StyleSheetService into all components that have a style sheet associated with them -->
     <ItemGroup>
       <ComponentStyles Include="**\*.razor.css;**\*.razor.scss" Exclude="$(LazyStyleSheets_StaticAssetFolder)\**" />

@@ -94,6 +94,7 @@ This library can be configured by adding values to your `csproj` file:
     <LazyStyleSheets_UseMinifiedStyleSheets>true</LazyStyleSheets_UseMinifiedStyleSheets>
     <LazyStyleSheets_UseGzippedStyleSheets>false</LazyStyleSheets_UseGzippedStyleSheets>
     <LazyStyleSheets_UseWebCompiler>true</LazyStyleSheets_UseWebCompiler>
+    <LazyStyleSheets_AutoInject>true</LazyStyleSheets_AutoInject>
   </PropertyGroup>
 ```
 
@@ -175,11 +176,14 @@ Activate use of compressed resources in your `csproj` file:
   </PropertyGroup>
 ```
 
-## Known issues
+#### Auto Inject
 
-### Custom namespace
+A convenient way of writing styled components is to put the scss/css file in the same folder as the component and name the style file according to the component, e.g. `Component.razor` and `Component.razor.css`.
+That way the css file gets grouped with the component in Visual Studio (and other IDEs with file nesting capability).
 
-The automatic injection of the style sheet does not work if the namespace for your component is overridden. Use a `<Stylesheet Src="..." />` instead.
+This library goes one step further, by making sure that components developed this way automatically have the style injected. If you want to opt out of this feature, simply set `<LazyStyleSheets_AutoInject>false</LazyStyleSheets_AutoInject>`.
+
+:warning: If you use a custom namespace for your component (i.e. you have an `@namespace SomeNamespace` directive in your component), then AutoInject won't work for you. Use a `<Stylesheet Src="..." />` instead.
 
 ## Contribute
 
