@@ -14,22 +14,22 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/example/blazor_app_with_component_project/BlazorApp" # Location of package manifests
+    directory: "/examples/blazor_app_with_component_project/BlazorApp" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/example/blazor_app_with_component_project/ComponentWithStyle" # Location of package manifests
+    directory: "/examples/blazor_app_with_component_project/ComponentWithStyle" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/example/component_library/ComponentLibrary" # Location of package manifests
+    directory: "/examples/component_library/ComponentLibrary" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/example/component_library/ConsumerApp" # Location of package manifests
+    directory: "/examples/component_library/ConsumerApp" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/example/standalone_app/BlazorApp" # Location of package manifests
+    directory: "/examples/standalone_app/BlazorApp" # Location of package manifests
     schedule:
       interval: "daily"
