@@ -44,40 +44,42 @@
   <Target Name="InjectOneStyleSheetService" Condition=" '$(CurrentFile)' != '' ">
     <!-- Create the injection code for the syle sheet service. Requires that the namespace corresponds to the folder hierarchy -->
     <PropertyGroup>
-      <TMP__Path>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('/', '\').Replace('\','.'))</TMP__Path>
-      <TMP__PathWithPeriod Condition="'$(TMP__Path)' == ''"></TMP__PathWithPeriod>
-      <TMP__PathWithPeriod Condition="'$(TMP__Path)' != ''">.$(TMP__Path)</TMP__PathWithPeriod>
+      <!--The directory of the current file-->
+      <TMP__Directory>$([System.String]::Copy($([System.IO.Path]::GetDirectoryName('$(CurrentFile)'))).Replace('\', '/'))</TMP__Directory>
+      <!--If this is not the root, we need to prefix this with a forward slash-->
+      <TMP__DirectoryWithPrefix Condition="'$(TMP__Directory)' == ''"></TMP__DirectoryWithPrefix>
+      <TMP__DirectoryWithPrefix Condition="'$(TMP__Directory)' != ''">/$(TMP__Directory)</TMP__DirectoryWithPrefix>
+      <!--The namespace path part is the directory where every forward slash is replaced by a period -->
+      <TMP__Namespace>$([System.String]::Copy('$(TMP__DirectoryWithPrefix)').Replace('/','.'))</TMP__Namespace>
       <TMP__Class>$([System.IO.Path]::GetFilename('$(CurrentFile)').Substring(0, $([System.IO.Path]::GetFilename('$(CurrentFile)').IndexOf('.razor'))))</TMP__Class>
-      <TMP__File>$([System.IO.Path]::GetDirectoryName('$(CurrentFile)').Replace('\','/'))/$([System.IO.Path]::GetFilenameWithoutExtension('$(CurrentFile)'))</TMP__File>
+      <TMP__File>$([System.IO.Path]::GetFilenameWithoutExtension('$(CurrentFile)'))</TMP__File>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">css</TMP__Extension>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' != 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' == 'false') ">min.css</TMP__Extension>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' == 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' != 'false') ">css.gz</TMP__Extension>
       <TMP__Extension Condition=" ('$(LazyStyleSheets_UseMinifiedStyleSheets)' != 'false') And ('$(LazyStyleSheets_UseGzippedStyleSheets)' != 'false') ">min.css.gz</TMP__Extension>
-      <TMP__FullStylePath>$(LazyStyleSheets_ComponentStyleFolder)/$(TMP__File).$(TMP__Extension)</TMP__FullStylePath>
+      <TMP__RequestPath>$(LazyStyleSheets_ComponentStyleFolder)$(TMP__DirectoryWithPrefix)/$(TMP__File).$(TMP__Extension)</TMP__RequestPath>
     </PropertyGroup>
-    <WriteLinesToFile File="$(IntermediateOutputPath)StyleSheetInjection\$(CurrentFile).g.cs"  WriteOnlyWhenDifferent="true" Overwrite="true"
-                      
-                      Lines="
-                      using Microsoft.JSInterop%3b;
-                      namespace $(RootNamespace)$(TMP__PathWithPeriod);
-                      {;
-                          public partial class $(TMP__Class);
-                          {;
-                              [global::Microsoft.AspNetCore.Components.Inject];
-                              IJSRuntime excubo_style_sheet_injection_js;
-                              {;
-                                  get => null%3b;
-                                  set;
-                                  {;
-                                      var src = &quot;$(TMP__FullStylePath)&quot;%3b;
-                                      var condition = $&quot;document.head.querySelector(`[href='{src}']`) == null&quot;%3b;
-                                      var action = $&quot;let s = document.createElement('link')%3b s.setAttribute('rel', 'stylesheet')%3b s.setAttribute('href', '{src}')%3b document.head.appendChild(s)%3b&quot;%3b;
-                                      value.InvokeVoidAsync(&quot;eval&quot;, $&quot;if ({condition}) {{ {action} }}&quot;)%3b;
-                                  };
-                              };
-                          };
-                      };
-                      ">
+    <WriteLinesToFile File="$(IntermediateOutputPath)StyleSheetInjection\$(CurrentFile).g.cs" WriteOnlyWhenDifferent="true" Overwrite="true" Lines="
+      using Microsoft.JSInterop%3b;
+      namespace $(RootNamespace)$(TMP__Namespace);
+      {;
+        public partial class $(TMP__Class);
+        {;
+          [global::Microsoft.AspNetCore.Components.Inject];
+          IJSRuntime excubo_style_sheet_injection_js;
+          {;
+            get =&gt; null%3b;
+            set;
+            {;
+              var src = &quot;$(TMP__RequestPath)&quot;%3b;
+              var condition = $&quot;document.head.querySelector(`[href='{src}']`) == null&quot;%3b;
+              var action = $&quot;let s = document.createElement('link')%3b s.setAttribute('rel', 'stylesheet')%3b s.setAttribute('href', '{src}')%3b document.head.appendChild(s)%3b&quot;%3b;
+              value.InvokeVoidAsync(&quot;eval&quot;, $&quot;if ({condition}) {{ {action} }}&quot;)%3b;
+            };
+          };
+        };
+      };
+      ">
     </WriteLinesToFile>
   </Target>
 
