@@ -76,7 +76,7 @@ This file is responsible for copying the scss files into the users application. 
     
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.1" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.3" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" />
@@ -94,7 +94,7 @@ This file is responsible for copying the scss files into the users application. 
 
 ```
 
-- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.1" />`.
+- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.2" />`.
 - `LazyStyleSheets` is configured to use a non-default output path `component_library`.
 - `LazyStyleSheets` is configured to not use `webcompiler` (because we want to define our own colors in the consumers' app).
 - we include the `build` targets in the nuget package.
