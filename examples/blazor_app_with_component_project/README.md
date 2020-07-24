@@ -19,7 +19,7 @@ All the following files have been modified slightly from the plain Blazor sample
     
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.2" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.3" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" />
@@ -29,7 +29,7 @@ All the following files have been modified slightly from the plain Blazor sample
 </Project>
 ```
 
-- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.2" />`.
+- added `<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.3" />`.
 - `LazyStyleSheets` is configured to use a non-default output path `css/component_with_style`.
 - `LazyStyleSheets` is configured to not use `webcompiler` (because we want to define our own colors in the BlazorApp).
 

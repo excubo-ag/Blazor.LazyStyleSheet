@@ -74,7 +74,7 @@
               var src = &quot;$(TMP__RequestPath)&quot;%3b;
               var condition = $&quot;document.head.querySelector(`[href='{src}']`) == null&quot;%3b;
               var action = $&quot;let s = document.createElement('link')%3b s.setAttribute('rel', 'stylesheet')%3b s.setAttribute('href', '{src}')%3b document.head.appendChild(s)%3b&quot;%3b;
-              value.InvokeVoidAsync(&quot;eval&quot;, $&quot;if ({condition}) {{ {action} }}&quot;)%3b;
+              try {value.InvokeVoidAsync(&quot;eval&quot;, $&quot;if ({condition}) {{ {action} }}&quot;)%3b;} catch {};
             };
           };
         };
