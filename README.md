@@ -1,8 +1,8 @@
 ## Excubo.Blazor.LazyStyleSheet
 
-![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)
-![Nuget](https://img.shields.io/nuget/dt/Excubo.Blazor.LazyStyleSheet)
-![GitHub](https://img.shields.io/github/license/excubo-ag/Blazor.LazyStyleSheet)
+[![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)](https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/)
+[![Nuget](https://img.shields.io/nuget/dt/Excubo.Blazor.LazyStyleSheet)](https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/)
+[![GitHub](https://img.shields.io/github/license/excubo-ag/Blazor.LazyStyleSheet)](https://github.com/excubo-ag/Blazor.LazyStyleSheet)
 
 A major issue on websites is slow page load. In part, this is due to enormous payloads that need to be downloaded in full before a page can be rendered correctly. Minimization and compression help to some degree, but it ignores the awkward fact that many style sheets are only used to a tiny fraction.
 
@@ -27,7 +27,7 @@ And you can now also remove the `<StyleSheets />` component in your `App.razor`,
 ### 1. Install the nuget package Excubo.Blazor.LazyStyleSheet
 
 Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/).
-![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)
+[![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)]((https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/))
 
 #### Package Manager:
 ```ps
