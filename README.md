@@ -31,17 +31,17 @@ Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.or
 
 #### Package Manager:
 ```ps
-Install-Package Excubo.Blazor.LazyStyleSheet -Version 3.1.4
+Install-Package Excubo.Blazor.LazyStyleSheet -Version 3.1.5
 ```
 
 #### .NET Cli:
 ```cmd
-dotnet add package Excubo.Blazor.LazyStyleSheet --version 3.1.4
+dotnet add package Excubo.Blazor.LazyStyleSheet --version 3.1.5
 ```
 
 #### Package Reference
 ```xml
-<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.4" />
+<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.5" />
 ```
 
 ### 2a. Write your style sheets and put them next to your component
