@@ -1,3 +1,5 @@
+:warning: With .NET 5, it is recommended to use the [scoped CSS](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation?view=aspnetcore-5.0) feature instead of this library.
+
 ## Excubo.Blazor.LazyStyleSheet
 
 [![Nuget](https://img.shields.io/nuget/v/Excubo.Blazor.LazyStyleSheet)](https://www.nuget.org/packages/Excubo.Blazor.LazyStyleSheet/)
@@ -31,17 +33,17 @@ Excubo.Blazor.LazyStyleSheet is distributed [via nuget.org](https://www.nuget.or
 
 #### Package Manager:
 ```ps
-Install-Package Excubo.Blazor.LazyStyleSheet -Version 3.1.5
+Install-Package Excubo.Blazor.LazyStyleSheet
 ```
 
 #### .NET Cli:
 ```cmd
-dotnet add package Excubo.Blazor.LazyStyleSheet --version 3.1.5
+dotnet add package Excubo.Blazor.LazyStyleSheet
 ```
 
 #### Package Reference
 ```xml
-<PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.5" />
+<PackageReference Include="Excubo.Blazor.LazyStyleSheet" />
 ```
 
 ### 2a. Write your style sheets and put them next to your component
