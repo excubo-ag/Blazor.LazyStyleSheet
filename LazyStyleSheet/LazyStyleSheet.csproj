@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <Import Project="package.csproj" Condition="Exists('package.csproj')" />
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -7,16 +7,12 @@
     <RootNamespace>Excubo.Blazor.LazyStyleSheet</RootNamespace>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>LazyStyleSheet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CodeAnalysisRuleSet>LazyStyleSheet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-
   <ItemGroup>
     <PackageReference Include="Excubo.Analyzers.Annotations" Version="1.0.1" />
     <PackageReference Include="Excubo.Analyzers.DependencyInjectionValidation" Version="1.0.10">
@@ -25,10 +21,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.9" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="build\" />
     <Content Include="build\*.targets" PackagePath="build\" />
   </ItemGroup>
-
 </Project>

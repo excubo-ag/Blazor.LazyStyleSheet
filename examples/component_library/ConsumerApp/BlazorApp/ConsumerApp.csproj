@@ -1,15 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>BlazorApp</RootNamespace>
     <EnableDefaultScopedCssItems>false</EnableDefaultScopedCssItems>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="ComponentLibrary" Version="1.0.0" />
   </ItemGroup>
-
   <Target Name="CompileResources" AfterTargets="CoreCompile">
     <Exec Command="webcompiler -r wwwroot" />
   </Target>

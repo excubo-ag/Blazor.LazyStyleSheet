@@ -1,16 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LazyStyleSheets_ComponentStyleFolder>css/component_with_style</LazyStyleSheets_ComponentStyleFolder>
     <LazyStyleSheets_UseWebCompiler>false</LazyStyleSheets_UseWebCompiler>
-    
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.9" />
   </ItemGroup>
-
 </Project>
