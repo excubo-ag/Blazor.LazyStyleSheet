@@ -5,7 +5,7 @@
     <EnableDefaultScopedCssItems>false</EnableDefaultScopedCssItems>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.9" />
+    <PackageReference Include="Excubo.Blazor.LazyStyleSheet" Version="3.1.10" />
   </ItemGroup>
   <Target Name="CompileWebAssets" AfterTargets="CoreCompile">
     <Exec Command="webcompiler -r wwwroot/css" />
