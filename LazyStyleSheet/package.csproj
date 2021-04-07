@@ -20,7 +20,7 @@
   <!--PackageId, Version-->
   <PropertyGroup>
     <PackageId>Excubo.Blazor.LazyStyleSheet</PackageId>
-    <Version>3.1.13</Version>
+    <Version>3.1.14</Version>
   </PropertyGroup>
   <!--Self Include-->
   <ItemGroup>
