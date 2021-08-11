@@ -13,12 +13,12 @@ namespace Excubo.Blazor.Tests_LazyStyleSheet
         {
             IRenderedComponent<Stylesheet>? cut = null;
             JSInterop.SetupVoid("eval", (i) => true);
-            Assert.DoesNotThrow(() => cut = RenderComponent<Stylesheet>((name: "Src", value: "hello.css")));
+            Assert.DoesNotThrow(() => cut = RenderComponent<Stylesheet>((Name: "Src", Value: "hello.css")));
             CollectionAssert.IsNotEmpty(JSInterop.Invocations);
             var verification = JSInterop.VerifyInvoke("eval");
             Assert.IsNotNull(verification);
             CollectionAssert.IsNotEmpty(verification.Arguments);
-            Assert.IsTrue(verification.Arguments.First().ToString()!.Contains("hello.css"));
+            Assert.IsTrue(verification.Arguments.First()!.ToString()!.Contains("hello.css"));
         }
     }
 }
