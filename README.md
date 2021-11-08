@@ -1,4 +1,4 @@
-:warning: With .NET 5, it is recommended to use the [scoped CSS](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation?view=aspnetcore-5.0) feature instead of this library.
+:warning: With .NET 5 & .NET 6, it is recommended to use the [scoped CSS](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation?view=aspnetcore-5.0) feature instead of this library.
 
 ## Excubo.Blazor.LazyStyleSheet
 
